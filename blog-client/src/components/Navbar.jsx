@@ -4,25 +4,26 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
-    const [open, setOpen] = React.useState(false);
-    const [scroll, setScroll] = React.useState(false);
-  
-    function transitionNavbar() {
-      if (window.scrollY > 80) {
-        setScroll(true);
-      } else {
-        setScroll(false);
-      }
+  const [open, setOpen] = React.useState(false);
+  const [scroll, setScroll] = React.useState(false);
+  const user = false;
+
+  function transitionNavbar() {
+    if (window.scrollY > 80) {
+      setScroll(true);
+    } else {
+      setScroll(false);
     }
-  
-    function handleNavLinkClick() {
-      setOpen(false);
-    }
-  
-    React.useEffect(() => {
-      window.addEventListener("scroll", transitionNavbar);
-      return () => window.removeEventListener("scroll", transitionNavbar);
-    }, [scroll]);
+  }
+
+  function handleNavLinkClick() {
+    setOpen(false);
+  }
+
+  React.useEffect(() => {
+    window.addEventListener("scroll", transitionNavbar);
+    return () => window.removeEventListener("scroll", transitionNavbar);
+  }, [scroll]);
 
   return (
     <header className="w-full fixed left-0 z-[100] bg-black text-white ease duration-500">
@@ -112,14 +113,30 @@ const Navbar = () => {
               </NavLink>
             </li>
           </ul>
+        </div>
+
+        <div className="flex items-center gap-1">
+          {user && (
+            <Link
+              to="/profile"
+              className="bg-primary text-xs md:text-base text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl"
+            >
+              Profile
+            </Link>
+          )}
+
+          <Link to="/register">
+            <button className="bg-primary text-xs md:text-base border-white border-2 text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl duration-500">
+              Register
+            </button>
+          </Link>
 
           <Link to="/login">
-          <button className="bg-primary text-xs md:text-base border-white border-2 text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl duration-500">
-            Login
-          </button>
+            <button className="bg-primary text-xs md:text-base border-white border-2 text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl duration-500">
+              Login
+            </button>
           </Link>
-          
-          </div>
+        </div>
       </nav>
     </header>
   );
