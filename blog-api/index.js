@@ -13,6 +13,7 @@ const categoryRoute = require("./routes/categoryRoutes");
 dotenv.config();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 const PORT = process.env.PORT || 3500;
 
@@ -29,7 +30,7 @@ const storage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, "");
+    cb(null, req.body.name);
   },
 });
 

@@ -8,13 +8,15 @@ const createUser = async (req, res) => {
     const { username, password, email } = req.body;
 
     if (!(email && password && username)) {
-      res.status(400).send("All input is required");
+      return res.status(400).json({ error: "All input fields are required" });
     }
 
-    const oldUser = await User.findOne({ email });
-
-    if (oldUser) {
-      return res.status(409).send("User Already Exist. Please Login");
+    // Check if the user with the same email already exists
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res
+        .status(409)
+        .json({ error: "User with email already exists. Please log in." });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -25,15 +27,6 @@ const createUser = async (req, res) => {
       email: req.body.email,
     });
 
-    const token = jwt.sign(
-      { username: username, email: email },
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: "2h",
-      }
-    );
-    // save user token
-    newUser.token = token;
     const savedUser = await newUser.save();
 
     // return new user
@@ -45,18 +38,22 @@ const createUser = async (req, res) => {
 
 const handleLogin = async (req, res) => {
   try {
-    //Getting user input
-    const { username, password } = req.body;
+    // Getting user input
+    const { email, password } = req.body;
 
     // Validate user input
-    if (!(password && username)) {
-      res.status(400).send("All input is required");
+    if (!(password && email)) {
+      return res.status(400).send("All input is required");
     }
-    const user = await User.findOne({ username });
-    if (!user) return res.status(400).json("Wrong Username");
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(400).json("Wrong Email");
+    }
 
     const checkPassword = await bcrypt.compare(password, user.password);
-    if (!checkPassword) return res.status(400).json("Wrong Password");
+    if (!checkPassword) {
+      return res.status(400).json("Wrong Password");
+    }
 
     if (user && checkPassword) {
       const token = jwt.sign(
@@ -74,6 +71,8 @@ const handleLogin = async (req, res) => {
       // user
       return res.status(200).json(info);
     }
+
+    // This line of code is unreachable because the previous if condition already returned a response.
     return res.status(400).send("Invalid Credentials");
   } catch (err) {
     res.status(500).json(err);

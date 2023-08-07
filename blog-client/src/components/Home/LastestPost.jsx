@@ -1,16 +1,16 @@
 import React from "react";
 import blog from "../../assets/blog.webp";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import newRequest from "../../utils/axiosRequest";
 import { BiSearchAlt } from "react-icons/bi";
 
 const LastestPost = ({ posts }) => {
   const [categories, setCategories] = React.useState([]);
+  const location = useLocation();
 
   React.useEffect(() => {
     const getCategories = async () => {
-      const res = await newRequest.get("/category");
-      console.log(res);
+      const res = await newRequest.get("/category" );
       setCategories(res.data);
     };
     getCategories();
@@ -60,7 +60,7 @@ const LastestPost = ({ posts }) => {
           {/* Search Functionality */}
           <div>
             <form action="" className="flex flex-col items-center gap-4 mb-4">
-              <label for="gsearch" className="hidden">
+              <label htmlFor="gsearch" className="hidden">
                 Search Catgories:
               </label>
               <div className="border-4 flex items-center px-3 py-3 justify-between">
@@ -69,6 +69,7 @@ const LastestPost = ({ posts }) => {
                   id="gsearch"
                   placeholder="Search Categories"
                   name="gsearch"
+                  className="focus:outline-none"
                 />
                 <BiSearchAlt />
               </div>

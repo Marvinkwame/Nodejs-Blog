@@ -1,17 +1,20 @@
 import React from "react";
 import blog from "../../assets/blog.webp";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const BlogIntro = ({ posts }) => {
+  const PF = "http://localhost:3500/images/";
   return (
     <section className="py-20">
       <div className="max-w-[1444px] w-full my-0 mx-auto py-8 md:px-10 px-3">
         <div className="flex flex-col lg:flex-row gap-4">
           {posts.slice(0, 1).map((post) => (
             <>
-              <Link to={`/post/${post._id}`} className="grid gap-y-1" key={post._id}>
-                <img src={blog} className="w-[1400px] h-[350px] object-cover" alt="" />
-                {/* 
+              <Link
+                to={`/post/${post._id}`}
+                className="grid gap-y-1"
+                key={post._id}
+              >
                 {post.photo && (
                   <img
                     className="w-[1400px] h-[350px] object-cover"
@@ -19,8 +22,7 @@ const BlogIntro = ({ posts }) => {
                     alt=""
                   />
                 )}
-                */}
-                
+
                 <div className="flex items-center ">
                   <p className="px-1 border-r-2 border-r-green-900">
                     2.4k Views
@@ -37,7 +39,7 @@ const BlogIntro = ({ posts }) => {
                 </p>
                 <div className="flex items-center ">
                   <p className="px-1 border-r-2 border-r-green-900 font-semibold">
-                    by Hatake Kakashi
+                    by {post.username}
                   </p>
                   <p className="px-1">
                     {" "}
@@ -45,13 +47,25 @@ const BlogIntro = ({ posts }) => {
                   </p>
                 </div>
               </Link>
+            </>
+          ))}
 
-              <div className="flex flex-col gap-6 items-center">
-                {posts.slice(1, 4).map((post) => (
-                  <>
-                    <Link to={`/post/${posts._id}`} className="grid place-items-center md:place-items-start">
-                      <img src={blog} className="w-[500px] h-[200px] object-cover" alt="" />
-                      {/*
+          <div className="flex flex-col gap-6 items-center">
+            {posts.slice(1, 3).map((post) => (
+              <>
+                <Link
+                  to={`/post/${post._id}`}
+                  key={post.title}
+                  className="grid place-items-center md:place-items-start"
+                >
+                  {post.photo && (
+                    <img
+                      className="w-[500px] h-[150px] object-cover"
+                      src={PF + post.photo}
+                      alt=""
+                    />
+                  )}
+                  {/*
                       {post.photo && (
                         <img
                           className="w-[500px] h-[200px] object-cover"
@@ -60,14 +74,12 @@ const BlogIntro = ({ posts }) => {
                         />
                       )}
                       */}
-                      
-                      <h2 className="text-center">{post.title}</h2>
-                    </Link>
-                  </>
-                ))}
-              </div>
-            </>
-          ))}
+
+                  <h2 className="text-center">{post.title}</h2>
+                </Link>
+              </>
+            ))}
+          </div>
         </div>
       </div>
     </section>

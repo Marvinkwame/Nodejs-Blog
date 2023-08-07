@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import { Link, NavLink } from "react-router-dom";
+import { Context } from "../context/Context";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState(false);
-  const user = false;
+  const { user, dispatch } = useContext(Context);
+  
 
   function transitionNavbar() {
     if (window.scrollY > 80) {
@@ -19,6 +21,10 @@ const Navbar = () => {
   function handleNavLinkClick() {
     setOpen(false);
   }
+
+  const userLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
 
   React.useEffect(() => {
     window.addEventListener("scroll", transitionNavbar);
@@ -117,25 +123,33 @@ const Navbar = () => {
 
         <div className="flex items-center gap-1">
           {user && (
-            <Link
-              to="/profile"
-              className="bg-primary text-xs md:text-base text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl"
-            >
-              Profile
-            </Link>
+            <>
+              <Link
+                to="/profile"
+                className="bg-primary text-xs md:text-base text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl"
+              >
+                Profile
+              </Link>
+
+              <button onClick={userLogout}>Logout</button>
+            </>
           )}
 
-          <Link to="/register">
-            <button className="bg-primary text-xs md:text-base border-white border-2 text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl duration-500">
-              Register
-            </button>
-          </Link>
+          {!user && (
+            <>
+              <Link to="/register">
+                <button className="bg-primary text-xs md:text-base border-white border-2 text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl duration-500">
+                  Register
+                </button>
+              </Link>
 
-          <Link to="/login">
-            <button className="bg-primary text-xs md:text-base border-white border-2 text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl duration-500">
-              Login
-            </button>
-          </Link>
+              <Link to="/login">
+                <button className="bg-primary text-xs md:text-base border-white border-2 text-white md:ml-3 mr-9 px-3 py-1 rounded-2xl duration-500">
+                  Login
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

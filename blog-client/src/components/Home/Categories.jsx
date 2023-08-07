@@ -8,7 +8,6 @@ const Categories = () => {
   React.useEffect(() => {
     const getCategories = async () => {
       const res = await newRequest.get("/category");
-      console.log(res);
       setCategories(res.data);
     };
     getCategories();
