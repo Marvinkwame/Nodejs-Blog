@@ -54,7 +54,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              className="py-2 rounded-sm px-8 w-full border-2 outline-none"
+              className="py-2 rounded-sm px-3 w-full border-2 outline-none"
               placeholder="Email Address"
               ref={emailRef}
             />
@@ -80,8 +80,8 @@ const Login = () => {
             Sign In
           </button>
 
-          <p className="heading">
-            Don't have an account?
+          <p className="heading text-center">
+            Don't have an account? <br />
             <Link
               to="/register"
               className="text-[#187B99] ml-2 font-bold heading"

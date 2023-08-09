@@ -74,7 +74,7 @@ const SinglePost = () => {
           {/*Author */}
           <div className="flex items-center gap-4 justify-center">
             <img
-              src={blog}
+              src={PF+user.profilePic}
               className="rounded-[90px] w-[3rem] h-[2rem] object-cover"
               alt=""
             />
@@ -103,7 +103,7 @@ const SinglePost = () => {
         </div>
 
         {posts.photo && (
-          <img src={PF + posts.photo} alt="" className="w-[90%] mx-auto" />
+          <img src={PF + posts.photo} alt="Post Image" className="w-[90%] h-[30rem] object-cover mx-auto" />
         )}
         <div className="w-[87%] mx-auto p-6 text-justify mt-6">
           {/* Small Info*/}
@@ -123,13 +123,14 @@ const SinglePost = () => {
         </div>
 
         <div>
+          {updatePost &&
           <button
             type="submit"
             className="bg-black text-white p-4 rounded-lg w-[20%] mt-6"
             onClick={updateContent}
           >
             Update Post
-          </button>
+          </button> }
         </div>
       </div>
     </section>

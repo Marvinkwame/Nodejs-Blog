@@ -19,4 +19,16 @@ const getCategory = async (req, res) => {
   }
 };
 
+const searchCategory = async (req, res) => {
+  const searchTerm = req.query.q;
+
+  try {
+    const searchResult = await Category.find({
+
+    })
+  } catch (err) {
+    console.log("error", err);
+  }
+};
+
 module.exports = { createCatgeory, getCategory };

@@ -3,7 +3,7 @@ const Reducer = (state, action) => {
     case "LOGIN_START":
       return {
         user: null,
-        isFetching: true,  //starting the process
+        isFetching: true, //starting the process
         error: false,
       };
     case "LOGIN_SUCCESS":
@@ -18,16 +18,32 @@ const Reducer = (state, action) => {
         isFetching: false,
         error: true,
       };
-    case "LOGOUT": 
+    case "LOGOUT":
       return {
         user: null,
         isFetching: false,
         error: false,
-      }
-    default: 
+      };
+    case "UPDATE_START":
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case "UPDATE_SUCCESS":
+      return {
+        user: action.payload,
+        isFetching: false,
+        error: false,
+      };
+    case "UPDATE_FAILURE":
+      return {
+        user: state.user,
+        isFetching: false,
+        error: true,
+      };
+    default:
       return state;
   }
 };
-
 
 export default Reducer;

@@ -1,7 +1,7 @@
 import React from "react";
 import register from "../assets/blogregister.webp";
 import newRequest from "../utils/axiosRequest";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const [user, setUser] = React.useState({
@@ -62,7 +62,7 @@ const Register = () => {
             </label>
             <input
               type="text"
-              className="py-2 rounded-sm px-8 w-full border-2 outline-none"
+              className="py-2 rounded-sm px-3 w-full border-2 outline-none"
               placeholder="User Name"
               name="username"
               onChange={handleChange}
@@ -100,6 +100,15 @@ const Register = () => {
             Sign Up
           </button>
           {responseError && <p className="text-red-600">{responseError}</p>}
+          <p className="heading">
+            Already signed up?
+            <Link
+              to="/login"
+              className="text-[#187B99] ml-2 font-bold heading"
+            >
+              Login
+            </Link>
+          </p>
         </form>
       </div>
 
@@ -109,6 +118,7 @@ const Register = () => {
           alt="Signup image"
           className="w-full h-full object-cover"
         />
+
       </div>
     </section>
   );

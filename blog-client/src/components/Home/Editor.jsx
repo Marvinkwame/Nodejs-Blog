@@ -1,32 +1,68 @@
 import React from "react";
-import blog from "../../assets/blog.webp";
 import { Link } from "react-router-dom";
+import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 
 const Editor = ({ posts }) => {
+  const PF = "http://localhost:3500/images/";
+  const contentRef = React.useRef(null);
+
+  const scrollLeft = () => {
+    if (contentRef.current) {
+      contentRef.current.scrollLeft -= 800;
+    }
+  };
+
+  const scrollRight = () => {
+    if (contentRef.current) {
+      contentRef.current.scrollLeft += 800;
+    }
+  };
+
   return (
-    <section className="py-12">
-      <div className="max-w-[1444px] w-full my-0 mx-auto py-8 border-blue-950 md:px-10 px-3">
-        <h2>Editor's Picks</h2>
+    <section className="py-12 relative border-4">
+      <div className="max-w-[1400px] my-0 mx-auto md:px-10 px-3">
+        <h2 className="text-2xl font-semibold">Editor's Picks</h2>
         <div className="flex flex-col md:flex-row mx-auto items-center justify-between gap-4">
+          <div className="absolute right-4 bottom-1 mt-4 ">
+            <button
+              onClick={scrollLeft}
+              className="p-2 m-2 border-2 text-xl text-primary border-primary rounded-full bg-white"
+            >
+              <FiChevronLeft />
+            </button>
+            <button
+              onClick={scrollRight}
+              className="p-2 m-2 border-2 text-xl text-primary border-primary rounded-full bg-white"
+            >
+              <FiChevronRight />
+            </button>
+          </div>
+
+          <div
+            id="content"
+            className="carousel p-2 border-purple-950 gap-2 flex items-center justify-start overflow-x-auto scroll-smooth scrollbar-hide relative"
+          >
           {/* Cards */}
-          {posts.map((post) => (
+          {posts.slice(0, 3).map((post) => (
             <Link
               to={`/post/${post._id}`}
-              className="grid place-items-center md:place-items-start"
+              className="grid place-items-center md:place-items-start w-[28rem] h-[27rem]"
+              key={post._id}
             >
-              <img src={blog} alt="" />
+              <img
+                src={PF + post.photo}
+                alt=""
+                className="w-[400px] h-[230px] object-cover"
+              />
               <div className="flex items-center mt-2">
                 <p className="px-1 border-r-2 border-r-green-900 font-semibold">
-                  2.4k Views
+                {Math.floor(Math.random() * 1000)} Views
                 </p>
-                <p className="px-1">3 minute read</p>
+                <p className="px-1">{Math.floor(Math.random() * 10)} minute read</p>
               </div>
-              <h2 className="font-semibold">
-                {post.title}
-              </h2>
+              <h2 className="font-semibold">{post.title}</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-                asperiores eveniet mollitia.
+                {post.desc}
               </p>
               <div className="flex items-center mt-2">
                 <p className="px-1 border-r-2 border-r-green-900 font-semibold">
@@ -38,6 +74,7 @@ const Editor = ({ posts }) => {
               </div>
             </Link>
           ))}
+          </div>
         </div>
       </div>
     </section>

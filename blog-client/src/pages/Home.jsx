@@ -24,7 +24,6 @@ const Home = () => {
   return (
     <>
       <BlogIntro posts={posts} />
-      <Categories />
       <CreateBlog />
 
       {user ? (
