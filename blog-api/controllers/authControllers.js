@@ -43,16 +43,16 @@ const handleLogin = async (req, res) => {
 
     // Validate user input
     if (!(password && email)) {
-      return res.status(400).send("All input is required");
+      return res.status(400).json( {error: "All input is required" });
     }
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return res.status(400).json("Wrong Email");
-    }
+    } 
 
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
-      return res.status(400).json("Wrong Password");
+      return res.status(400).json({ error: "Wrong Password"});
     }
 
     if (user && checkPassword) {
